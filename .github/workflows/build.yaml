@@ -46,7 +46,7 @@ jobs:
 
     - name: Build for Android
       if: matrix.goos == 'android'
-      run: gomobile bind -target=android -o "libxray-${{ matrix.goos }}-${{ matrix.goarch }}.aar"
+      run: gomobile bind -target=android -androidapi 21 -o "libxray-${{ matrix.goos }}-${{ matrix.goarch }}.aar"
 
     - name: Build for iOS
       if: matrix.goos == 'ios'
