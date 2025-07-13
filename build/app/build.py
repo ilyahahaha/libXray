@@ -92,7 +92,7 @@ class Builder(object):
         pass
 
     def after_build(self):
-        pass
+        print(f"output dir: {self.build_dir}")
 
     def reset_files(self):
         self.clean_lib_files(["main.go"])
