@@ -56,6 +56,7 @@ jobs:
       run: python3 build/main.py windows
       env:
         CC: x86_64-w64-mingw32-gcc
+        CGO_CFLAGS: "-D_GNU_SOURCE"
     
     - name: Build for Android
       if: matrix.platform == 'android'
