@@ -30,16 +30,10 @@ jobs:
       with:
         go-version: '1.24.4'
 
-    - name: Set up Python and Poetry
+    - name: Set up Python
       uses: actions/setup-python@v5
       with:
         python-version: '3.12'
-        cache: 'poetry'
-
-    - name: Install dependencies
-      run: |
-        pip install poetry
-        poetry install --no-root
 
     - name: Build for Linux
       if: matrix.platform == 'linux'
