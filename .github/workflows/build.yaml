@@ -13,21 +13,29 @@ jobs:
         include:
           - goos: linux
             goarch: amd64
+            os: ubuntu-latest
           - goos: linux
             goarch: arm64
+            os: ubuntu-latest
           - goos: windows
             goarch: amd64
+            os: ubuntu-latest
           - goos: windows
             goarch: arm64
+            os: ubuntu-latest
           - goos: darwin
             goarch: amd64
+            os: macos-latest
           - goos: darwin
             goarch: arm64
+            os: macos-latest
           - goos: android
             goarch: arm64
+            os: ubuntu-latest
           - goos: ios
             goarch: arm64
-    runs-on: ubuntu-latest
+            os: macos-latest
+    runs-on: ${{ matrix.os }}
     steps:
     - uses: actions/checkout@v4
 
