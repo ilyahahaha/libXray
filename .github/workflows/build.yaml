@@ -14,12 +14,16 @@ jobs:
         include:
           - platform: linux
             os: ubuntu-latest
+            output_path: linux_so/
           - platform: windows
             os: ubuntu-latest
+            output_path: windows_dll/
           - platform: android
             os: ubuntu-latest
+            output_path: android_aar/
           - platform: apple
             os: macos-latest
+            output_path: apple_go/
     runs-on: ${{ matrix.os }}
     steps:
     - name: Checkout repository
@@ -44,6 +48,8 @@ jobs:
     - name: Build for Linux
       if: matrix.platform == 'linux'
       run: python3 build/main.py linux
+      env:
+        CGO_CFLAGS: "-D_GNU_SOURCE"
 
     - name: Build for Windows
       if: matrix.platform == 'windows'
