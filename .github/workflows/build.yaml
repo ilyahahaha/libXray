@@ -20,10 +20,10 @@ jobs:
             output_path: windows_dll/
           - platform: android
             os: ubuntu-latest
-            output_path: android_aar/
+            output_path: android/
           - platform: apple
             os: macos-latest
-            output_path: apple_go/
+            output_path: apple_xcframework/
     runs-on: ${{ matrix.os }}
     steps:
     - name: Checkout repository
