@@ -1,0 +1,61 @@
+name: Build
+
+on:
+  push:
+    branches: [ "main" ]
+  pull_request:
+    branches: [ "main" ]
+
+jobs:
+  build:
+    strategy:
+      matrix:
+        include:
+          - goos: linux
+            goarch: amd64
+          - goos: linux
+            goarch: arm64
+          - goos: windows
+            goarch: amd64
+          - goos: windows
+            goarch: arm64
+          - goos: darwin
+            goarch: amd64
+          - goos: darwin
+            goarch: arm64
+          - goos: android
+            goarch: arm64
+          - goos: ios
+            goarch: arm64
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v4
+
+    - name: Set up Go
+      uses: actions/setup-go@v5
+      with:
+        go-version: '1.24.4'
+
+    - name: Install gomobile for mobile builds
+      if: matrix.goos == 'android' || matrix.goos == 'ios'
+      run: go install golang.org/x/mobile/cmd/gomobile@latest && gomobile init
+
+    - name: Build for Linux/Windows/macOS
+      if: matrix.goos != 'android' && matrix.goos != 'ios'
+      run: go build -v -o "libxray-${{ matrix.goos }}-${{ matrix.goarch }}"
+
+    - name: Build for Android
+      if: matrix.goos == 'android'
+      run: gomobile bind -target=android -o "libxray-${{ matrix.goos }}-${{ matrix.goarch }}.aar"
+
+    - name: Build for iOS
+      if: matrix.goos == 'ios'
+      run: gomobile bind -target=ios -o "libXray.xcframework"
+
+    - name: Upload Artifacts
+      uses: actions/upload-artifact@v4
+      with:
+        name: libxray-${{ matrix.goos }}-${{ matrix.goarch }}
+        path: |
+          libxray-${{ matrix.goos }}-${{ matrix.goarch }}*
+          libXray.xcframework
