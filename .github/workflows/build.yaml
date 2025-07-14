@@ -25,7 +25,7 @@ jobs:
                 libXray-sources.jar
           - platform: apple
             os: macos-latest
-            output_path: apple_xcframework/
+            output_path: apple_xcframework
     runs-on: ${{ matrix.os }}
     steps:
     - name: Checkout repository
@@ -40,6 +40,10 @@ jobs:
       uses: actions/setup-python@v5
       with:
         python-version: '3.12'
+    
+    - name: Install LLVM-MinGW for Windows build
+      if: matrix.platform == 'windows'
+      run: winget install -e --id MartinStorsjo.LLVM-MinGW.UCRT
 
     - name: Build for Linux
       if: matrix.platform == 'linux'
