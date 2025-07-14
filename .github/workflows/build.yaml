@@ -41,9 +41,9 @@ jobs:
       with:
         python-version: '3.12'
     
-    - name: Install LLVM-MinGW for Windows build
+    - name: Set up LLVM-MinGW for Windows build
       if: matrix.platform == 'windows'
-      run: winget install -e --id MartinStorsjo.LLVM-MinGW.UCRT
+      uses: mstorsjo/llvm-mingw-action@v1
 
     - name: Build for Linux
       if: matrix.platform == 'linux'
