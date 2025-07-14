@@ -47,7 +47,7 @@ jobs:
       
     - name: Set up LLVM-MinGW for Windows build
       if: matrix.platform == 'windows'
-      run: winget install MartinStorsjo.LLVM-MinGW.UCRT
+      run: winget install MartinStorsjo.LLVM-MinGW.UCRT --disable-interactivity --accept-source-agreements
 
     - name: Build for Linux
       if: matrix.platform == 'linux'
