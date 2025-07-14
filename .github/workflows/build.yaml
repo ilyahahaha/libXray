@@ -41,9 +41,13 @@ jobs:
       with:
         python-version: '3.12'
     
+    - name: Set up winget for Windows build
+      if: matrix.platform == 'windows'
+      uses: Cyberboss/install-winget@v1
+      
     - name: Set up LLVM-MinGW for Windows build
       if: matrix.platform == 'windows'
-      uses: mstorsjo/llvm-mingw-action@v1
+      run: winget install MartinStorsjo.LLVM-MinGW.UCRT
 
     - name: Build for Linux
       if: matrix.platform == 'linux'
